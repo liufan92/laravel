@@ -30,4 +30,8 @@ class User extends Authenticatable
     protected $dates = [
         'dob'
     ];
+
+    public function articles(){
+        return $this->hasMany('App\Article');
+    }
 }

@@ -78,7 +78,8 @@ class ArticlesController extends Controller
             'live'=> $request->live,
             'post_on' => $request->post_on
         ]);*/
-        return redirect('/articles');
+        //return redirect('/articles');
+        return redirect()->back();
     }
 
     /**
@@ -121,7 +122,8 @@ class ArticlesController extends Controller
         else
             $article->update($request->all());
 
-        return redirect('/articles');
+        //return redirect('/articles');
+        return redirect()->back();
     }
 
     /**
@@ -143,7 +145,8 @@ class ArticlesController extends Controller
         //$article = Article::findOrFail($id);
         //$article->delete();
 
-        return redirect('/articles');
+        //return redirect('/articles');
+        return redirect()->back();
     }
 
     /* Unimplemented: restore soft deleted article

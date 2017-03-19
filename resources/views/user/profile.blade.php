@@ -17,10 +17,35 @@
 				<img class="profile-img" src="http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-french-guy.png">
 
 				<h1>{{$user->name}}</h1>
-				<h1>{{$user->dob->format('l j F Y')}} ({{$user->dob->age}} years old)</h1>
-				<h1>{{$user->email}}</h1>
+				<h5>{{$user->dob->format('l j F Y')}} ({{$user->dob->age}} years old)</h5>
+				<h5>{{$user->email}}</h5>
 
 				<button class="btn btn-success">Follow</button>
+
+				<hr>
+
+				<ul class="list-group">
+				@forelse($articles as $article)
+				<li class="list-group-item" style="margin-top: 20px">
+					<span class="pull-left">{{$user->name}}</span>	
+							
+					<form action="/articles/{{$article->id}}" method="POST" class="pull-right">
+						{{ csrf_field() }}
+						{{ method_field('DELETE') }}
+						<button class="btn btn-xs">
+							x
+						</button>
+					</form>
+					<span class="pull-right" style="margin-right: 10px">Posted {{$article->created_at->diffForHumans()}}</span>
+					<a class="pull-right" href="/articles/{{$article->id}}/edit" style="margin-right: 10px">Edit</a>	
+					<hr style="margin-top: 30px">
+					<div>{{ $article->content }}</div>
+				</li>
+				@empty
+				<h1>No articles to show. Create one now <a href="/articles/create">Create</a></h1>
+				@endforelse
+				</ul>
+				{{ $articles->links() }}
 			</div>
 		</div>
 	</div>

@@ -1,4 +1,4 @@
-@extends('layouts.app');
+@extends('layouts.app')
 
 @section('content')
 <div class="row">
@@ -6,10 +6,13 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<span>
-					{{ Auth::user()->name }}
+
+					{{ $article->user->name }}
+					@if($article->user_id == Auth::id())
 					<small>
 						<a href="/articles/{{ $article->id }}/edit">Edit</a>
 					</small>
+					@endif
 				</span>
 				<span class="pull-right">
 					{{ $article->created_at->diffForHumans() }}
