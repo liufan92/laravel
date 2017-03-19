@@ -91,8 +91,14 @@ class ArticlesController extends Controller
     public function show($id)
     {
         //$article = Article::find($id);
+        //$article = Article::findOrFail($id);
+        //return view('articles.show', compact('article'));
+
         $article = Article::findOrFail($id);
-        return view('articles.show', compact('article'));
+        $comments = $article->comments;
+        return view('articles.show')
+            ->with('article', $article)
+            ->with('comments', $comments);
     }
 
     /**

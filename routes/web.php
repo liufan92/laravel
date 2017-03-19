@@ -21,4 +21,6 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/profile/{username}', 'ProfileController@profile');
 
+Route::post('/comments', 'CommentController@store');
+
 Route::resource('articles', 'ArticlesController');

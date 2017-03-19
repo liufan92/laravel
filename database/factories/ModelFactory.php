@@ -34,3 +34,12 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
         'post_on' => Carbon\Carbon::parse('+1 week'),     
     ];
 });
+
+$factory->define(App\Comment::class, function (Faker\Generator $faker) {
+
+    return [
+        'user_id' => App\User::all()->random()->id,
+        'article_id' => App\Article::all()->random()->id,
+        'text' => $faker->paragraph(1),
+    ];
+});
