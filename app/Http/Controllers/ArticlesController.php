@@ -9,16 +9,11 @@ use DB;
 
 class ArticlesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //Eloquent way
         //$articles = Article::all(); //get all
-        $articles = Article::paginate(10);
+        $articles = Article::latest('created_at')->paginate(10);
         //$articles = Article::withTrashed()->paginate(10); //Get back soft deleted articles
         //$articles = Article::onlyTrashed()->paginate(10);
         //$articles = Article::whereLive(1)->get(); //get all articles where live = 1
@@ -33,24 +28,18 @@ class ArticlesController extends Controller
         return view('articles.index', compact('articles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('articles.create');
+        //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        //Validation
+        $this->validate($request,[
+            'content' => 'required|max:1000',
+        ]);
+        $message = 'Sorry! Post creation failed.';
         /*Method 1 for saving data into database
         $article = new Article;
         $article->user_id = Auth::user()->id;
@@ -62,7 +51,9 @@ class ArticlesController extends Controller
         */
 
         //Method 2
-        Article::create($request->all());
+        if(Article::create($request->all())){
+            $message = 'Post successfully created!';
+        };
 
         /*DB::table('articles')->insert([
             'user_id' => Auth::user()->id,
@@ -79,15 +70,9 @@ class ArticlesController extends Controller
             'post_on' => $request->post_on
         ]);*/
         //return redirect('/articles');
-        return redirect()->back();
+        return redirect()->back()->with(['message' => $message]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //$article = Article::find($id);
@@ -101,25 +86,12 @@ class ArticlesController extends Controller
             ->with('comments', $comments);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $article = Article::findOrFail($id);
         return view('articles.edit', compact('article'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $article = Article::findOrFail($id);
@@ -129,15 +101,9 @@ class ArticlesController extends Controller
             $article->update($request->all());
 
         //return redirect('/articles');
-        return redirect()->back();
+        return redirect('/articles');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //Destroy: Soft delete, mark article as delete

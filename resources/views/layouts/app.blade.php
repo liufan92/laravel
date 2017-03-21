@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Scripts -->
@@ -64,15 +65,13 @@
                                         <a href="/home">Home</a>
                                     </li>
                                     <li>
-                                        <a href="/profile/{{Auth::user()->username}}">My Profile</a>
-                                    </li>
-                                    <hr>
-                                    <li>
-                                        <a href="/articles/create">Create Article</a>
+                                        <a href="{{route('profile', ['username' => Auth::user()->username])}}">My Profile</a>
+                                        <!--<a href="/profile/{{Auth::user()->username}}">My Profile</a>-->
                                     </li>
                                     <li>
                                         <a href="/articles">Feed</a>
                                     </li>
+                                    <hr>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -97,5 +96,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 </body>
 </html>

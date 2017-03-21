@@ -11,16 +11,29 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
 
-Route::get('/profile/{username}', 'ProfileController@profile');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', function () {
+	    return view('welcome');
+	});
 
-Route::post('/comments', 'CommentController@store');
+	Route::get('/home', 'HomeController@index');
 
-Route::resource('articles', 'ArticlesController');
+	Route::get('/profile/{username}', [
+		'uses' => 'ProfileController@profile',
+		'as' => 'profile'
+	]);
+
+	Route::post('/comments', [
+		'uses' => 'CommentController@store',
+		'as' => 'comment.post'
+		]);
+
+	Route::resource('articles', 'ArticlesController');
+});
+
+

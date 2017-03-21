@@ -22,7 +22,7 @@
 			<div class="panel-body">
 				{{ $article->content }}
 				<hr>
-				<form method="POST" action="/comments">
+				<form method="POST" action="{{route('comment.post')}}">
 					{{csrf_field()}}
 					<input type="hidden" name="user_id" value="{{Auth::id()}}">
 					<input type="hidden" name="article_id" value="{{$article->id}}">
