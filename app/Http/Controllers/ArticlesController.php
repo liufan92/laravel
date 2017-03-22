@@ -94,11 +94,13 @@ class ArticlesController extends Controller
 
     public function update(Request $request, $id)
     {
+        echo $id;
         $article = Article::findOrFail($id);
         if(!isset($request->live))
             $article->update(array_merge($request->all(), ['live' => false]));
-        else
+        else{
             $article->update($request->all());
+        }
 
         //return redirect('/articles');
         return redirect('/articles');
@@ -106,6 +108,12 @@ class ArticlesController extends Controller
 
     public function destroy($id)
     {
+        //Prevent other users from submitted delete request
+        $article = Article::where('id', $id)->first();
+        if(Auth::user() != $article->user){
+            return redirect()->back();
+        }
+
         //Destroy: Soft delete, mark article as delete
         Article::destroy($id);
             //Article::destroy([1,2,3,4]); //for multiple
