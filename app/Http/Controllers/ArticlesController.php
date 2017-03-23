@@ -132,9 +132,7 @@ class ArticlesController extends Controller
 
     public function postLikeArticle(Request $request)
     {
-        echo ('Hi');
         $article_id = $request['articleId'];
-        $update = false;
         $article = Article::find($article_id);
         if(!$article){
             return null;

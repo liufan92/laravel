@@ -26,4 +26,29 @@ $(document).ready(function(){
 			});
 	});
 
+	$('.postComment').on('click', function(event){
+		var username;
+		var created_at;
+		event.preventDefault();
+		articleId = $(this).siblings('[name=article_id]').val();
+		userId = $(this).siblings('[name=user_id]').val();
+		comment = $(this).siblings('[name=text]').val();
+		$.ajax({
+			context: this,
+			method: 'POST',
+			url: urlComment,
+			data:{articleId: articleId, text: comment, _token: token },
+			success: function(data){
+				username = data['username'];
+				created_at = data['created_at'];
+				$(this).siblings('[name=text]').val('');
+				var commentSection = $(this).parent();
+				$('<p>'+username+' : <i>'+comment+'</i> <span class="pull-right">'+data['created_at']+'</span></p>').insertAfter(commentSection);
+			}
+		});
+
+		
+		//commentSection.insertAfter(comment, commentSection.childNode[0]);
+	});
+
 });

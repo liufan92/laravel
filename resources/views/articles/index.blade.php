@@ -38,8 +38,8 @@
 							{{csrf_field()}}
 							<input type="hidden" name="user_id" value="{{Auth::id()}}">
 							<input type="hidden" name="article_id" value="{{$article->id}}">
-							<input type="text" name="text" size="50" placeholder="Say Something...">
-							<button class="btn btn-primary btn-sm">Send</button>
+							<input type="text" name="text" size="50" class="commentInput" placeholder="Say Something...">
+							<button class="btn btn-primary btn-sm postComment">Send</button>
 						</form>
 						@forelse($article->comments as $comment)
 						<p>{{$comment->user->name}} : <i>{{$comment->text}}</i> <span class="pull-right">{{$comment->created_at->diffForHumans()}}</span></p>
@@ -88,5 +88,6 @@
 	<script>
 		var token = '{{ Session::token() }}';
 		var urlLike = "{{ route('like') }}";
+		var urlComment = "{{route('comment.post')}}";
 	</script>
 @endsection
