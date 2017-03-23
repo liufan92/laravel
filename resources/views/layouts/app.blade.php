@@ -70,6 +70,10 @@
                                         <!--<a href="/profile/{{Auth::user()->username}}">My Profile</a>-->
                                     </li>
                                     <li>
+                                        <a href="{{route('profile.edit', ['username' => Auth::user()->username])}}">Edit Profile</a>
+                                        <!--<a href="/profile/{{Auth::user()->username}}">My Profile</a>-->
+                                    </li>
+                                    <li>
                                         <a href="/articles">Feed</a>
                                     </li>
                                     <hr>

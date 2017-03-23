@@ -24,11 +24,11 @@
 				</div>
 			</div>
 		</div>
-	</section>>
+	</section>
 
 	<section class="row new-post">
 		<div class="col-md-6 col-md-offset-3">
-			@include('articles.create');
+			@include('articles.create')
 		</div>
 	</section>
 	<section class="row">

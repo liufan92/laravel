@@ -1,4 +1,4 @@
-@extends('layouts.app');
+@extends('layouts.app')
 
 @section('content')
 	<section class="row new-post">
@@ -16,12 +16,10 @@
 						<div class="info">
 							Posted by {{ $article->user->name }} {{ $article->created_at->diffForHumans() }}
 						</div>
-						<div class="interaction">		
-							
-								<a class="like" href="#"><i class="fa fa-thumbs-o-up" aria-hideen="true"> Like</i></a> |
+						<div class="interaction">					
+								<a class="like" href="#"><i class="fa fa-thumbs-o-up" aria-hideen="true"> {{Auth::user()->likes->where('article_id', $article->id)->first() ? 'You liked this' : 'Like'}}</i></a> |
 								<a class="toggleComment" href="#"><i class="fa fa-comment-o" aria-hideen="true"> Comment</i></a> 
 								@if($article->user_id == Auth::id())
-								<!--<a class="editPost" href="/articles/{{$article->id}}/edit">| <i class="fa fa-pencil-square-o" aria-hideen="true"> Edit</i></a>-->
 								<a class='editPost' data-toggle="modal" data-target="#edit-modal" href="#">| <i class="fa fa-pencil-square-o" aria-hideen="true"> Edit</i></a>
 								<form action="/articles/{{$article->id}}" method="POST" class="pull-right">
 									{{ csrf_field() }}
@@ -89,5 +87,6 @@
 	</div><!-- /.modal -->
 	<script>
 		var token = '{{ Session::token() }}';
+		var urlLike = "{{ route('like') }}";
 	</script>
 @endsection

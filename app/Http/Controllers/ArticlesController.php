@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use App\Like;
 use Auth;
 use DB;
 
@@ -127,6 +128,30 @@ class ArticlesController extends Controller
 
         //return redirect('/articles');
         return redirect()->back();
+    }
+
+    public function postLikeArticle(Request $request)
+    {
+        echo ('Hi');
+        $article_id = $request['articleId'];
+        $update = false;
+        $article = Article::find($article_id);
+        if(!$article){
+            return null;
+        }
+        $user = Auth::user();
+        $like = $user->likes()->where('article_id', $article_id)->first();
+        if($like){
+            $like->delete();
+            return null;
+        }else{
+            $like = new Like();
+            $like->like = true;
+            $like->user_id = $user->id;
+            $like->article_id = $article->id;
+            $like->save();
+        }
+        return null;
     }
 
     /* Unimplemented: restore soft deleted article

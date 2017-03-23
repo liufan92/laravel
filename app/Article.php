@@ -44,4 +44,8 @@ class Article extends Model
     public function comments(){
         return $this->hasMany('App\Comment')->latest();
     }
+
+    public function likes(){
+        return $this->hasMany('App\Like');
+    }
 }

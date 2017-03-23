@@ -7,17 +7,23 @@ $(document).ready(function(){
 
 	$(".editPost").on('click', function(event){
 		event.preventDefault();
-		var postContent = $(this).parent().siblings('p').text();
-		postId = $(this).parent().parent().data("id");
-		$('#editPostBody').val(postContent);
-		$('#editPostForm').attr('action','/articles/'+postId);
+		var articleContent = $(this).parent().siblings('p').text();
+		articleId = $(this).parent().parent().data("id");
+		$('#editPostBody').val(articleContent);
+		$('#editPostForm').attr('action','/articles/'+articleId);
 	});
 
-	/*$('#modal-save').on('click', function(){
+	$(".like").on('click', function(event){
+		event.preventDefault();
+		articleId = $(this).parent().parent().data("id");
 		$.ajax({
 			method: 'POST',
-			url: 'articles/'+ postId,
-			data: {body: $('#editPostBody').val(), "&_token":token, _method:'PUT'}
-		});
-	});*/
+			url: urlLike,
+			data:{ articleId: articleId, _token: token }
+		})
+			.done(function(){
+				event.target.innerText = event.target.innerText == ' Like' ? ' You liked This' : ' Like';
+			});
+	});
+
 });

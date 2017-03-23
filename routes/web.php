@@ -28,10 +28,30 @@ Route::group(['middleware' => ['auth']], function () {
 		'as' => 'profile'
 	]);
 
+	Route::get('/profile/{username}/edit', [
+		'uses' => 'ProfileController@profileEdit',
+		'as' => 'profile.edit'
+	]);
+
+	Route::post('/profile/{username}/update', [
+		'uses' => 'ProfileController@profileUpdate',
+		'as' => 'profile.update'
+	]);
+
+	Route::get('/userimage/{filename}', [
+		'uses' => 'ProfileController@getUserImage',
+		'as' => 'profile.image'
+	]);
+
 	Route::post('/comments', [
 		'uses' => 'CommentController@store',
 		'as' => 'comment.post'
-		]);
+	]);
+
+	Route::post('/like', [
+		'uses' => 'ArticlesController@postLikeArticle',
+		'as' => 'like'
+	]);
 
 	Route::resource('articles', 'ArticlesController');
 });
